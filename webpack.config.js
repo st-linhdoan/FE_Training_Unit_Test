@@ -94,7 +94,7 @@ const developmentConfig = () => merge([
   parts.devServer({
     // Customize host/port here if needed
     host: 'localhost',
-    port: 3000
+    port: 4000
   })
 ]);
 
