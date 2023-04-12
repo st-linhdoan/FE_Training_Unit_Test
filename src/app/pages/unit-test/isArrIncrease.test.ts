@@ -3,7 +3,7 @@ import { isArrIncrease } from './data';
 
 describe('test function isArrayIncrease', () => {
   test('array null', () => {
-    expect(isArrIncrease([])).toBeFalsy();
+    expect(isArrIncrease([])).toBeTruthy();
   });
   test('array with element value decrease', () => {
     expect(isArrIncrease([5, 4, 3, 2, 1])).toBeFalsy();
