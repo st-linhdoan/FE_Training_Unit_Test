@@ -11,9 +11,6 @@ describe('Authen User', () => {
   );
 
   const token = 'token';
-  mockGetToken.mockImplementation(() => '1111');
-  mockSetToken.mockImplementation(() => 'aaaa');
-  mockRemoveToken.mockImplementation(() => null);
 
   test('signIn', () => {
     authenUser.signIn(token);
