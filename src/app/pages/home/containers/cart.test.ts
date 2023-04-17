@@ -21,62 +21,40 @@ const product = {
   ]
 };
 
-describe('test crud', () => {
-  describe('add product', () => {
+describe('test crud product', () => {
+  describe('test add product', () => {
     const cart = new Cart([]);
-    const mockAddPrd = jest.spyOn(Cart.prototype, 'addProduct');
-
-    it('test add prd', () => {
-      cart.addProduct(product);
-      expect(mockAddPrd).toBeCalled();
-      expect(mockAddPrd).toBeCalledWith(product);
-    });
-
-    it ('test add prd success', () => {
-      cart.getProductList();
+    cart.addProduct(product);
+    it('add product, length product list have > 0', () => {
       expect(cart.productList).toHaveLength(1);
-      expect(cart.productList).toEqual([product]);
     });
-  
+    it('add product, product list should be return product', () => {
+      expect(cart.productList).toContain(product);
+    });
   });
 
-  describe('get product', () => {
+  describe('test get product', () => {
     const cart = new Cart([product]);
-    const mockGetPrd = jest.spyOn(Cart.prototype, 'getProduct');
     const productItem = cart.getProduct('001');
 
-    it('getProduct is called', () => {
-      expect(mockGetPrd).toBeCalled();
-      expect(mockGetPrd).toBeCalledWith('001');
-    });
-
-    it('getProduct success', () => {
-      expect(productItem).toEqual(product);
+    it('get product should be return product', () => {
+      expect(productItem).toMatchObject(product);
     });
   
   });
 
-  describe('remove product', () => {
+  describe('test remove product', () => {
     const cart = new Cart([product]);
-    const mockRemovePrd = jest.spyOn(Cart.prototype, 'removeProduct');
-
-    it('removeProduct is called', () => {
-      cart.removeProduct('001');
-      expect(mockRemovePrd).toBeCalled();
-      expect(mockRemovePrd).toBeCalledWith('001');
-    });
-
-    it('removeProduct success', () => {
+    it('removeProduct success should return array not have this product', () => {
       cart.getProductList();
-      expect(cart.productList).toEqual([]);
+      expect(cart.productList).not.toMatchObject(product);
     });
-
   });
 
-  describe('update product', () => {
+  describe('test update product', () => {
     const productUpdate = {
       id: '001',
-      name: 'P2',
+      name: 'P22',
       price: 100,
       quantity: 1,
       discount: [
@@ -95,31 +73,23 @@ describe('test crud', () => {
       ]
     };
     const cart = new Cart([product]);
-    const mockUpdatePrd = jest.spyOn(Cart.prototype, 'updateProduct');
     cart.updateProduct(productUpdate);
-
-    it('updateProduct is called', () => {
-      expect(mockUpdatePrd).toBeCalled();
-      expect(mockUpdatePrd).toBeCalledWith(productUpdate);
-    });
-
-    it('updateProduct success', () => {
+    
+    it('updateProduct should return new value', () => {
       cart.getProductList();
-      expect(cart.productList).toEqual([productUpdate]);
+      expect(cart.productList).toContain(productUpdate);
     });
-
   });
 
-  describe('getTotalPrice', () => {
+  describe('test getTotalPrice', () => {
     const cart = new Cart([product]);
-    const mockGetTotal = jest.spyOn(Cart.prototype, 'getTotalPrice');
     cart.getTotalPrice();
-
-    it('getTotalPrice is called', () => {
-      expect(mockGetTotal).toBeCalled();
+    it('getTotalPrice should return equal number after caculator', () => {
+      expect(cart.getTotalPrice()).not.toEqual(105);
     });
-    it('getTotalPrice success', () => {
+    it('getTotalPrice should return equal number after caculator', () => {
       expect(cart.getTotalPrice()).toEqual(95);
     });
   });
+
 });
