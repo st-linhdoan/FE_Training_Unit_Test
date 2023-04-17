@@ -21,27 +21,6 @@ const product = {
   ]
 };
 
-const productUpdate = {
-  id: '001',
-  name: 'P2',
-  price: 100,
-  quantity: 1,
-  discount: [
-    {
-      number: 1,
-      percent: 5
-    },
-    {
-      number: 2,
-      percent: 10
-    },
-    {
-      number: 3,
-      percent: 20
-    }
-  ]
-};
-
 describe('test crud', () => {
   describe('add product', () => {
     const cart = new Cart([]);
@@ -95,6 +74,26 @@ describe('test crud', () => {
   });
 
   describe('update product', () => {
+    const productUpdate = {
+      id: '001',
+      name: 'P2',
+      price: 100,
+      quantity: 1,
+      discount: [
+        {
+          number: 1,
+          percent: 5
+        },
+        {
+          number: 2,
+          percent: 10
+        },
+        {
+          number: 3,
+          percent: 20
+        }
+      ]
+    };
     const cart = new Cart([product]);
     const mockUpdatePrd = jest.spyOn(Cart.prototype, 'updateProduct');
     cart.updateProduct(productUpdate);
@@ -111,16 +110,16 @@ describe('test crud', () => {
 
   });
 
-  describe('getTotalPayment', () => {
+  describe('getTotalPrice', () => {
     const cart = new Cart([product]);
-    const mockGetTotal = jest.spyOn(Cart.prototype, 'getTotalPayment');
-    cart.getTotalPayment();
+    const mockGetTotal = jest.spyOn(Cart.prototype, 'getTotalPrice');
+    cart.getTotalPrice();
 
-    it('getTotalPayment is called', () => {
+    it('getTotalPrice is called', () => {
       expect(mockGetTotal).toBeCalled();
     });
-    it('getTotalPayment success', () => {
-      expect(cart.getTotalPayment()).toEqual(95);
+    it('getTotalPrice success', () => {
+      expect(cart.getTotalPrice()).toEqual(95);
     });
   });
 });

@@ -21,12 +21,15 @@ export class Cart {
   getProductList() {
     return this.productList;
   }
+
   addProduct(product: Product) {
     this.productList.push(product);
   }
+
   getProduct(id: string) {
     return this.productList.find((item: Product) => item.id === id);
   }
+  
   removeProduct(id: string) {
     this.productList = this.productList.filter((item: Product) => item.id !== id );
   }
@@ -40,7 +43,7 @@ export class Cart {
     });
   }
 
-  getTotalPayment() {
+  getTotalPrice() {
     return this.productList.reduce((sum, product: Product) => {
       let discount = 0;
       product.discount.forEach((item: Discount) => {
