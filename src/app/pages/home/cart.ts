@@ -37,7 +37,7 @@ export class Cart {
   }
 
   addProduct(product: Product) {
-    if (product) {
+    if (product && !this.productList.find(item => +item.id === +product.id)) {
       this.productList.push(product);
     }
   }
@@ -51,12 +51,8 @@ export class Cart {
   }
 
   updateProduct(product: Product) {
-    this.productList = this.productList.map((item: Product) => {
-      if (item.id === product.id) {
-        return product;
-      }
-      return item;
-    });
+    const indexPrd = this.productList.findIndex(item => +item.id === +product.id);
+    this.productList[indexPrd] = product;
   }
 
   getTotalPrice() {

@@ -76,6 +76,10 @@ describe('test crud product', () => {
 
     cart.addProduct(product1);
     expect(cart.productList).toHaveLength(1);
+    
+    cart.addProduct(product1);
+    expect(cart.productList).toHaveLength(1);
+    
     expect(cart.productList).toContain(product1);
 
     cart.getTotalPrice();
