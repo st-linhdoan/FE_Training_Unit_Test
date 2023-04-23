@@ -3,7 +3,7 @@ import { getUserInfo } from '../home.action';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import { useParams } from 'react-router';
 
-const Home = (): JSX.Element => {
+const UserInfo = (): JSX.Element => {
   const dispatch = useDispatch();
 
   const { id } = useParams();
@@ -42,4 +42,4 @@ const Home = (): JSX.Element => {
   );
 };
 
-export default Home;
+export default UserInfo;

@@ -1,7 +1,6 @@
 import React from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import appReducer from '@app/app.reducers';
 import '@testing-library/jest-dom/extend-expect';
 import { applyMiddleware, createStore } from 'redux';
 import UserList from './UserList';
@@ -11,8 +10,8 @@ import { Routes, Route, MemoryRouter } from 'react-router-dom';
 import { setupServer } from 'msw/node';
 import { rest } from 'msw';
 import appMiddleware from '@app/app.middleware';
-import { createMemoryHistory } from 'history';
-import { useLocation } from 'react-router';
+import appReducer from '@app/app.reducers';
+
 const server = setupServer(
   rest.get('https://jsonplaceholder.typicode.com/users', (req, res, ctx) => {
     // respond using a mocked JSON body
