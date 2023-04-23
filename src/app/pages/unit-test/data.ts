@@ -1,11 +1,8 @@
 export const isArrIncrease = (arr: number[]) => {
-  if (!Array.isArray(arr) || arr.length < 2 || arr.some(isNaN)) {
+  if (!Array.isArray(arr) || arr.length < 2) {
     return false;
   }
-  for (let i = 0; i < arr.length - 1; i++) {
-    if (arr[i+1] < arr[i]) {
-      return false;
-    }
-  }
-  return true;
+  return arr.every((num: number, index: number) =>
+    !isNaN(num) && (index === 0 || num >= arr[index - 1])
+  );
 };
