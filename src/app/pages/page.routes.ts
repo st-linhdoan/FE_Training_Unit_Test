@@ -12,7 +12,6 @@ const pageRoutes: PageRoute[] = [
     element: Page,
     children: [
       ...homeRoutes,
-      ...articleRoutes
     ]
   }
 ];
