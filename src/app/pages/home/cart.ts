@@ -3,27 +3,43 @@ type Discount = {
   number: number;
 }
 
+type LineProduct = {
+  name: string,
+  discount: Discount[];
+}
+
 export type Product = {
   id: string;
   name: string;
   price: number;
   quantity: number;
-  discount: Discount[];
+  lineProduct: string;
+  // discount: Discount[];
 }
 
 export class Cart {
   productList: Product[] = [];
+  lineProduct: LineProduct[] = [];
 
-  constructor(data: Product[]) {
-    this.productList = [...data];
+  constructor(product: Product[], lineProduct: LineProduct[]) {
+    this.productList = [...product];
+    this.lineProduct = [...lineProduct];
   }
 
   getProductList() {
     return this.productList;
   }
 
+  addLineProduct(lineProduct: LineProduct[]){
+    if (lineProduct) {
+      this.lineProduct = lineProduct;
+    }
+  }
+
   addProduct(product: Product) {
-    this.productList.push(product);
+    if (product) {
+      this.productList.push(product);
+    }
   }
 
   getProduct(id: string) {
@@ -46,7 +62,8 @@ export class Cart {
   getTotalPrice() {
     return this.productList.reduce((sum, product: Product) => {
       let discount = 0;
-      product.discount.forEach((item: Discount) => {
+      const lineProductItem = this.lineProduct.find(item => item.name === product.lineProduct);
+      lineProductItem.discount.forEach((item: Discount) => {
         if (product.quantity >= item.number && item.percent > discount) {
           discount = item.percent;
         }

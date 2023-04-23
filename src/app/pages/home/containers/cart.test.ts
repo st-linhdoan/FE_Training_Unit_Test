@@ -1,95 +1,131 @@
 import { Cart } from '../cart';
 
-const product = {
+const product1 = {
   id: '001',
   name: 'P1',
   price: 100,
   quantity: 1,
-  discount: [
-    {
-      number: 1,
-      percent: 5
-    },
-    {
-      number: 2,
-      percent: 10
-    },
-    {
-      number: 3,
-      percent: 20
-    }
-  ]
+  lineProduct: 'Orange'
 };
 
+const product2 = {
+  id: '002',
+  name: 'P2',
+  price: 100,
+  quantity: 4,
+  lineProduct: 'Mango'
+};
+
+const lineProduct = [
+  {
+    name: 'Orange',
+    discount: [
+      {
+        number: 1,
+        percent: 5
+      },
+      {
+        number: 2,
+        percent: 10
+      },
+      {
+        number: 3,
+        percent: 20
+      }
+    ]
+  },
+  {
+    name: 'Mango',
+    discount: [
+      {
+        number: 1,
+        percent: 5
+      },
+      {
+        number: 2,
+        percent: 10
+      },
+      {
+        number: 3,
+        percent: 20
+      }
+    ]
+  },
+];
+
 describe('test crud product', () => {
-  describe('test add product', () => {
-    const cart = new Cart([]);
-    cart.addProduct(product);
-    it('add product, length product list have > 0', () => {
-      expect(cart.productList).toHaveLength(1);
-    });
-    it('add product, product list should be return product', () => {
-      expect(cart.productList).toContain(product);
-    });
+
+  test('test add product null', () => {
+    const cart = new Cart([], []);
+    cart.addProduct(null);
+    expect(cart.productList).toHaveLength(0);
+
+    cart.getTotalPrice();
+    expect(cart.getTotalPrice()).toEqual(0);
   });
 
-  describe('test get product', () => {
-    const cart = new Cart([product]);
-    const productItem = cart.getProduct('001');
-
-    it('get product should be return product', () => {
-      expect(productItem).toMatchObject(product);
-    });
-  
-  });
-
-  describe('test remove product', () => {
-    const cart = new Cart([product]);
-    it('removeProduct success should return array not have this product', () => {
-      cart.getProductList();
-      expect(cart.productList).not.toMatchObject(product);
-    });
-  });
-
-  describe('test update product', () => {
+  test('test crud have one product', () => {
     const productUpdate = {
       id: '001',
       name: 'P22',
       price: 100,
-      quantity: 1,
-      discount: [
-        {
-          number: 1,
-          percent: 5
-        },
-        {
-          number: 2,
-          percent: 10
-        },
-        {
-          number: 3,
-          percent: 20
-        }
-      ]
+      quantity: 2,
+      lineProduct: 'Mango'
     };
-    const cart = new Cart([product]);
+    const cart = new Cart([], lineProduct);
+
+    cart.addProduct(product1);
+    expect(cart.productList).toHaveLength(1);
+    expect(cart.productList).toContain(product1);
+
+    cart.getTotalPrice();
+    expect(cart.getTotalPrice()).toEqual(95);
+
     cart.updateProduct(productUpdate);
-    
-    it('updateProduct should return new value', () => {
-      cart.getProductList();
-      expect(cart.productList).toContain(productUpdate);
-    });
+    expect(cart.productList).toContain(productUpdate);
+    cart.getTotalPrice();
+    expect(cart.getTotalPrice()).toEqual(180);
+
+    cart.removeProduct('001');
+    expect(cart.productList).not.toMatchObject(product1);
+    expect(cart.productList).toHaveLength(0);
   });
 
-  describe('test getTotalPrice', () => {
-    const cart = new Cart([product]);
+  test('test crud have many product', () => {
+    const cart = new Cart([], lineProduct);
+
+    cart.addProduct(product1);
+    expect(cart.productList).toHaveLength(1);
+    expect(cart.productList).toContain(product1);
+
     cart.getTotalPrice();
-    it('getTotalPrice should return equal number after caculator', () => {
-      expect(cart.getTotalPrice()).not.toEqual(105);
-    });
-    it('getTotalPrice should return equal number after caculator', () => {
-      expect(cart.getTotalPrice()).toEqual(95);
-    });
+    expect(cart.getTotalPrice()).toEqual(95);
+
+    cart.addProduct(product2);
+    expect(cart.productList).toHaveLength(2);
+    expect(cart.productList).toContain(product2);
+
+    cart.getTotalPrice();
+    expect(cart.getTotalPrice()).toEqual(415);
+
+    const productUpdate = {
+      id: '002',
+      name: 'P22',
+      price: 100,
+      quantity: 2,
+      lineProduct: 'Mango'
+    };
+    cart.updateProduct(productUpdate);
+    expect(cart.productList).toContain(productUpdate);
+    cart.getTotalPrice();
+    expect(cart.getTotalPrice()).toEqual(275);
+
+    cart.removeProduct('002');
+    expect(cart.productList).not.toMatchObject(product1);
+    expect(cart.productList).toHaveLength(1);
+    
+    cart.getTotalPrice();
+    expect(cart.getTotalPrice()).toEqual(95);
   });
 
 });
