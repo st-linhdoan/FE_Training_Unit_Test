@@ -9,18 +9,12 @@ const UserInfo = (): JSX.Element => {
   const { id } = useParams();
   const { dataUser } = useSelector((state: RootStateOrAny) => state.homeReducer);
   const { error, isLoading } = useSelector((state: RootStateOrAny) => state.homeReducer);
-  const [isLoadingIndicator, setIsLoadingIndicator] = useState(true);
   
   useEffect (() => {
     dispatch(getUserInfo(id));
-    if (!isLoading) {
-      setTimeout(() => {
-        setIsLoadingIndicator(false);
-      }, 1000);
-    }
   }, [id]);
 
-  if (isLoadingIndicator) {
+  if (isLoading) {
     return <div data-testid="page-loading">Loading</div>;
   }
 

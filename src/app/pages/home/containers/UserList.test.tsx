@@ -99,9 +99,8 @@ describe('test user list component', () => {
     test('test user interaction', async () => {
       render(<UserList />, { wrapper: ReduxWrapper });
       expect(screen.getByTestId('page-loading')).toBeInTheDocument();
-      screen.debug();
       await waitFor(() => {
-        expect(screen.getByTestId('user-list')).toBeInTheDocument();
+        expect(screen.queryByTestId('page-loading')).toBeNull();
       });
       fireEvent.click(screen.getByTestId('btn-delete-1'));
       expect(screen.queryByTestId('btn-delete-1')).not.toBeInTheDocument();
@@ -122,7 +121,6 @@ describe('test user list component', () => {
       );
       render(<UserList />, { wrapper: ReduxWrapper });
       expect(screen.getByTestId('page-loading')).toBeInTheDocument();
-      screen.debug();
       await waitFor(() => {
         expect(screen.queryByTestId('page-loading')).toBeNull();
       });

@@ -69,7 +69,6 @@ describe('test user info screen', () => {
     test('Render user info', async () => {
       render(<UserInfo/>, { wrapper: ReduxWrapper });
       expect(screen.getByTestId('page-loading')).toBeInTheDocument();
-      screen.debug();
       await waitFor(() => {
         expect(screen.queryByTestId('page-loading')).toBeNull();
       });
@@ -88,7 +87,6 @@ describe('test user info screen', () => {
       );
       render(<UserInfo/>, { wrapper: ReduxWrapper });
       expect(screen.getByTestId('page-loading')).toBeInTheDocument();
-      screen.debug();
       await waitFor(() => {
         expect(screen.queryByTestId('page-loading')).toBeNull();
       });

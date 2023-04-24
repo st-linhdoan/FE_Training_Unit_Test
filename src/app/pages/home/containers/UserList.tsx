@@ -7,21 +7,15 @@ const Home = () => {
   const dispatch = useDispatch();
   const dataList = useSelector((state: RootStateOrAny) => state.homeReducer.dataList);
   const { isLoading, error } = useSelector((state: RootStateOrAny) => state.homeReducer);
-  const [isLoadingIndicator, setIsLoadingIndicator] = useState(true);
   const deleteUserItem = (id: string) => {
     dispatch(deleteUser(id));
   };
 
   useEffect (() => {
     dispatch(getListUser());
-    if (!isLoading) {
-      setTimeout(() => {
-        setIsLoadingIndicator(false);
-      }, 1000);
-    }
   }, []);
 
-  if (isLoadingIndicator) {
+  if (isLoading) {
     return <div data-testid='page-loading'>Loading</div>;
   }
 
